@@ -18,6 +18,8 @@ const int dhtPin = 41;
 const int voltagePin = A0;
 const int voltageGain = 4.0, voltageRef = 5.0;
 
+int stage = 0;
+
 #define DHTTYPE DHT11
 
 LiquidCrystal lcd (rs, en, d4, d5, d6, d7);
@@ -26,6 +28,12 @@ DHT           dht (dhtPin, DHTTYPE);
 void setup() {
   lcd.begin (16, 2);
   dht.begin ();
+  Serial1.begin (9600);
+  
+  Serial1.println ("Hi from here");
+  lcd.clear ();
+  lcd.setCursor (0, 0);
+  lcd.print ("Welcome");
 }
 
 void loop() {
@@ -48,5 +56,8 @@ void loop() {
   lcd.print (String ("Volt: ") + String (voltage));
   lcd.setCursor (0, 1);
   lcd.print (String ("DVal: ") + String(aVal));
-  
+
+  Serial1.println (String ("Temp: ") + String (t) + String (" C"));
+  Serial1.println (String ("Humid: ") + String (h) + String (" %"));
+  Serial1.println (String ("Volt: ") + String (voltage));
 }
